@@ -24,6 +24,7 @@ import java.util.List;
 public class WrapPagerIndicator extends View implements IPagerIndicator {
     private int mVerticalPadding;
     private int mHorizontalPadding;
+    private int mStrokeWidth;
     private int mFillColor;
     private float mRoundRadius;
     private Interpolator mStartInterpolator = new LinearInterpolator();
@@ -45,11 +46,19 @@ public class WrapPagerIndicator extends View implements IPagerIndicator {
         mPaint.setStyle(Paint.Style.FILL);
         mVerticalPadding = UIUtil.dip2px(context, 6);
         mHorizontalPadding = UIUtil.dip2px(context, 10);
+        mStrokeWidth = dp2px(context, 1);
+    }
+    
+    private int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         mPaint.setColor(mFillColor);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth((float) mStrokeWidth);
         canvas.drawRoundRect(mRect, mRoundRadius, mRoundRadius, mPaint);
     }
 
